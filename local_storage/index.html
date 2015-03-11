@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Score a badminton match</title>
+    <meta charset="UTF-8">
+
+</head>
+<body>
+    <h1> Katabadminton</h1>
+    <button class="btn-point" data-joueur="scorejoueur_1">Joueur 1 marque</button>
+    <button class="btn-point" data-joueur="scorejoueur_2">Joueur 2 marque</button>
+
+
+    <div id="scorejoueur_1">Joueur1 :</div>
+    <div id="scorejoueur_2">Joueur2 :</div>
+
+    <script type ='application/javascript'>
+      var mark = function(){
+        var current_score = localStorage.getItem(this.dataset.joueur)
+        var new_score = parseInt(current_score) + 1
+        localStorage.setItem(this.dataset.joueur, new_score)
+        console.log(localStorage.getItem(this.dataset.joueur))
+      }
+
+      var refresh_score = function() {
+          var score = "Joueur1: " + localStorage.getItem("scorejoueur_1")
+          document.getElementById('scorejoueur_1').innerHTML = score
+          var score = "Joueur2: " + localStorage.getItem("scorejoueur_2")
+          document.getElementById('scorejoueur_2').innerHTML = score
+          setTimeout(refresh_score, 100)
+      }
+
+      window.onload = function(){
+          localStorage.setItem("scorejoueur_1",0)
+          localStorage.setItem("scorejoueur_2",0)
+          var buttons = document.getElementsByClassName('btn-point')
+          for(var i = 0 ; i < buttons.length ; i++){
+            buttons[i].addEventListener("click", mark, false)
+          }
+          setTimeout(refresh_score, 1000)
+        };
+
+     </script>
+</body>
+
+</html>
